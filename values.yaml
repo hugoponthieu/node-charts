@@ -1,0 +1,7 @@
+replicaCount: 1
+image: ghcr.io/hugoponthieu/test-helm:main
+internalPort: 8080
+appName: testapp
+service:
+  internalPort: 8080
+  externalPort: 8080
