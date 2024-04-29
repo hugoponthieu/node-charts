@@ -1,7 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.appName }}
+  name: metadata:
+  name: {{ printf "%s-svc" .Values.appName | trunc 63 }}
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
