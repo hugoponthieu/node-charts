@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Ingress
+metadata:
+  name: {{ printf "%s-ingress" .Values.appName | trunc 63 }}
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ printf "%s-ingress" .Values.appName | trunc 63 }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+  annotations:
+    kubernetes.io/ingres.class: "traefik"
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+    - host: {{ .Values.appURL }}
+      http:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: {{ printf "%s-svc" .Values.appName | trunc 63 }}
+            port:
+              number: {{ .Values.service.externalPort }}
